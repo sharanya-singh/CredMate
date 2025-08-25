@@ -81,6 +81,10 @@ def forecast_prophet(y, steps=8):
 st.title("🏠 House Price Index Forecasting Dashboard")
 
 uploaded = st.file_uploader("Upload HPI CSV", type=["csv"])
+
+# load data (uploaded or default)
+df = load_data(uploaded)
+
 if uploaded:
     df = load_data(uploaded)
     city = st.selectbox("Select City", df["City"].unique())
