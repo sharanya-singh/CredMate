@@ -1,14 +1,21 @@
-# CredMate
-Full-stack fintech app for credit score simulation, loan comparison, and personalized financial insights.
+# Predictive Analytics for Indian House Price Index Trends
+An interactive **Streamlit** web app for exploring and forecasting **House Price Index (HPI)** data.  
+The app supports **SARIMA (AIC-tuned)** and **Prophet** models, provides visualizations, and allows exporting forecasts to CSV.  
 
+---
 
-A full-stack fintech web app that helps users simulate credit score changes, compare loan offers, and explore “what-if” repayment scenarios. Built with FastAPI, React.js, and PostgreSQL, it delivers personalized financial tips, interactive charts, and real-time calculations.
-Features:
+## 🚀 Features
 
-📊 Credit Score Simulation – Predict score changes based on repayment, utilization, and credit mix.
-💰 Loan Comparison – Filter and sort loans by interest rate, EMI, and tenure.
-🔮 What-If Scenarios – See how early repayments or refinancing impact finances.
-📈 Financial Health Tips – Actionable suggestions to improve your score and savings.
-🔐 Secure Auth – JWT-based authentication for user sessions.
-🌐 Deployed – Backend on Render, frontend on Vercel for instant access.
-Tech Stack: FastAPI • React.js • TailwindCSS • Chart.js • PostgreSQL • PyJWT
+- 📂 Upload HPI dataset (CSV format)
+- 🏙️ Select city and generate time series
+- ⚡ **SARIMA Forecasting**
+  - Automated AIC-based hyperparameter tuning
+  - Forecast + confidence intervals
+- 🔮 **Prophet Forecasting**
+  - Forecast + uncertainty bands
+- 📊 **Historical Trends**
+  - Raw HPI data visualization
+- ⬇️ Export forecasts as CSV
+- 🎨 Streamlit-powered dashboard with interactive tabs
+
+---
