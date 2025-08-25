@@ -167,4 +167,3 @@ if df is not None and "city" in df.columns:
             file_name=f"{city}_forecasts.csv",
             mime="text/csv"
         )
-
