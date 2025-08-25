@@ -10,9 +10,13 @@ import io
 # Utility Functions
 # -----------------------------
 
-def load_data(path):
-    df = pd.read_csv(path, parse_dates=["Date"])
+@st.cache_data
+def load_data():
+    df = pd.read_csv("cleaned_hpi.csv")
+    # Make sure Quarter column is datetime
+    df['Quarter'] = pd.to_datetime(df['Quarter'])
     return df
+
 
 def city_series(df, city):
     s = df[df["City"] == city].set_index("Date")["HPI"]
