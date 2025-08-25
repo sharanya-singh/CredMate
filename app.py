@@ -12,21 +12,30 @@ import io
 
 @st.cache_data
 def load_data(file):
-    # if user uploads a file (BytesIO object)
+    # Load user-uploaded file or default
     if file is not None:
         df = pd.read_csv(file)
     else:
-        # fallback to default CSV in project folder
         df = pd.read_csv("cleaned_hpi.csv")
+
+    # Standardize column names (case-insensitive)
+    df.columns = [c.strip().lower() for c in df.columns]
+
+    # Ensure date column exists
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"])
+    elif "quarter" in df.columns:
+        df["date"] = pd.to_datetime(df["quarter"])
+    else:
+        st.error("❌ No 'Date' or 'Quarter' column found in CSV")
     
-    # make sure Quarter column is datetime
-    df['Quarter'] = pd.to_datetime(df['Quarter'])
     return df
 
 def city_series(df, city):
-    s = df[df["City"] == city].set_index("Date")["HPI"]
-    s = s.groupby(s.index).mean()      # handle duplicate timestamps
-    s = s.asfreq("QE")                 # quarterly frequency
+    # Ensure lowercase matching
+    s = df[df["city"] == city].set_index("date")["hpi"]
+    s = s.groupby(s.index).mean()  # handle duplicates
+    s = s.asfreq("Q")              # quarterly frequency
     return s
 
 def aic_search(y):
@@ -85,9 +94,8 @@ uploaded = st.file_uploader("Upload HPI CSV", type=["csv"])
 # load data (uploaded or default)
 df = load_data(uploaded)
 
-if uploaded:
-    df = load_data(uploaded)
-    city = st.selectbox("Select City", df["City"].unique())
+if df is not None and "city" in df.columns:
+    city = st.selectbox("Select City", df["city"].unique())
 
     if st.button("Run Forecasts"):
         series = city_series(df, city)
@@ -159,3 +167,4 @@ if uploaded:
             file_name=f"{city}_forecasts.csv",
             mime="text/csv"
         )
+
